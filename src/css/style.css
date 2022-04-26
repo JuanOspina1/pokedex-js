@@ -15,3 +15,8 @@ body {
 .poke-result {
   margin: 15px 5px;
 }
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
