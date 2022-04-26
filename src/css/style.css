@@ -1,0 +1,17 @@
+body {
+  background-image: url("https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png");
+}
+
+.main-body {
+  background-image: url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
+}
+
+.results-view {
+  margin: 5px;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
+}
+
+.poke-result {
+  margin: 15px 5px;
+}
