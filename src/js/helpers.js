@@ -8,3 +8,9 @@ export const getJSON = async function (url) {
     throw err;
   }
 };
+
+export const toTitleCase = function (str) {
+  return str.replace(/\p{L}+('\p{L}+)?/gu, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.slice(1);
+  });
+};

@@ -1,12 +1,13 @@
 import * as model from "./model.js";
 import resultsPokeView from "./views/resultsPokeView.js";
 import searchView from "./views/searchView.js";
+import initialView from "./views/initialView.js";
 
 const controlPokeSearchResults = async function () {
   try {
     // Add a spinner for searching
 
-    // Get search value - need to do some search validation
+    // Get search value
     const result = searchView.getSearchResult();
     if (!result) return;
 
@@ -19,8 +20,12 @@ const controlPokeSearchResults = async function () {
   }
 };
 
-// controlPokeSearchResults();
+const controlEnteringPokedex = function () {
+  initialView.transitionEntrance();
+};
+
 const init = function () {
   searchView.addHandlerPokeSearch(controlPokeSearchResults);
+  initialView.addHandlerEnterPokedex(controlEnteringPokedex);
 };
 init();
