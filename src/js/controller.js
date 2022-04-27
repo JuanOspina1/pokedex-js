@@ -13,6 +13,7 @@ const controlPokeSearchResults = async function () {
     // Load search result - currently only 1
     await model.loadPoke(result);
     resultsPokeView.render(model.state.poke);
+    searchView._clearInput();
   } catch (err) {
     console.error(`${err}, 💥`);
   }
