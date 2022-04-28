@@ -7,7 +7,6 @@ class ResultsPokeView extends View {
 
   // I need to find a way to only create a button if a second type exist
   _generateMarkup() {
-    // Divide the HTML and then return the joined markup. Dynamically create type and stats based on amount returned from the API.
     return `
       <div class="col">
             <div class="card poke-result" style="width: 18rem">
@@ -50,6 +49,11 @@ class ResultsPokeView extends View {
     return `
     <li class= "poke-stat">${capitalStat}: ${baseStat}</li>
     `;
+  }
+
+  // Once each view has its own _generateMarkup, this should go in the View to extend to all classes
+  clear() {
+    this._parentElement.innerHTML = "";
   }
 }
 

@@ -1,20 +1,31 @@
-import { API_URL, HIGHEST_POKE_ID } from "./config.js";
+import {
+  API_URL_POKE,
+  API_URL_TYPE,
+  HIGHEST_POKE_ID,
+  RES_PER_PAGE,
+} from "./config.js";
 import { getJSON, toTitleCase } from "./helpers.js";
 // I need to include the ".js" to properly import the files. My other project included parcel and that may have automatically allowed exclusion.
 
 export const state = {
   poke: {},
+
+  // Not sure how to implement the search state properly
+  search: {
+    query: "",
+    results: [],
+    resultsPerPage: RES_PER_PAGE,
+    page: 1,
+  },
 };
 
 const createPoke = function (data) {
   const poke = data;
-  console.log(poke);
-  console.log(typeof poke.id);
+  // console.log(poke);
 
   const capitalName = toTitleCase(poke.name);
   if (poke.id > HIGHEST_POKE_ID) return;
 
-  // Need to return the types & stats as an array.
   return {
     name: capitalName,
     sprite: poke.sprites.other.home.front_default,
@@ -26,23 +37,22 @@ const createPoke = function (data) {
 
 export const loadPoke = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}${id}`);
-    // Logging the poke data from the API
+    state.search.query = id;
+    const data = await getJSON(`${API_URL_POKE}${id}`);
     // console.log(data);
+
     state.poke = createPoke(data);
   } catch (err) {
-    console.log(`${err} 🤢🤢🤢`);
+    console.error(`${err} 🤢🤢🤢`);
     throw err;
   }
 };
 
-export const loadPokeByType = async function (type) {
+export const getPokeByType = async function (type) {
   try {
-    const data = await getJSON(`https://pokeapi.co/api/v2/type/${type}`);
+    const data = await getJSON(`${API_URL_TYPE}${type}`);
     console.log(data);
-    // capture poke name from data
 
-    // For testing purposes, catch the first 5 from the array.
     const res = data.pokemon.map((el) => el.pokemon.name);
     console.log(res);
 

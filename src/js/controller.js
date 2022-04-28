@@ -12,7 +12,6 @@ const controlPokeSearchResults = async function () {
     // Need to convert text to lowercase
     const result = searchView.getSearchResult();
     if (!result) return;
-    console.log(typeof result);
 
     // Load search result - currently only 1
     await model.loadPoke(result);
@@ -25,9 +24,9 @@ const controlPokeSearchResults = async function () {
 
 const controlTypeButtonResults = async function (type) {
   try {
-    // Likely need to clear content from the parent of results view first
+    resultsPokeView.clear();
 
-    const names = await model.loadPokeByType(type);
+    const names = await model.getPokeByType(type);
 
     names.map(async (el) => {
       await model.loadPoke(el);
