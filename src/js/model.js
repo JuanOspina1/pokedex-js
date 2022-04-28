@@ -11,12 +11,11 @@ const createPoke = function (data) {
   console.log(poke);
 
   const capitalName = toTitleCase(poke.name);
-  console.log(poke.stats);
 
   // Need to return the types & stats as an array.
   return {
     name: capitalName,
-    sprite: poke.sprites.front_default,
+    sprite: poke.sprites.other.home.front_default,
     id: poke.id,
     types: poke.types,
     stats: poke.stats,
@@ -32,5 +31,22 @@ export const loadPoke = async function (id) {
   } catch (err) {
     console.log(`${err} 🤢🤢🤢`);
     throw err;
+  }
+};
+
+export const loadPokeByType = async function (type) {
+  try {
+    const data = await getJSON(`https://pokeapi.co/api/v2/type/${type}`);
+    console.log(data);
+    // capture poke name from data
+
+    // For testing purposes, catch the first 5 from the array.
+    const res = data.pokemon.map((el) => el.pokemon.name);
+    console.log(res);
+
+    // The below works for creating a single poke
+    return res;
+  } catch (err) {
+    console.log(err);
   }
 };
