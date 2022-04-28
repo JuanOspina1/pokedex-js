@@ -1,4 +1,4 @@
-import { API_URL } from "./config.js";
+import { API_URL, HIGHEST_POKE_ID } from "./config.js";
 import { getJSON, toTitleCase } from "./helpers.js";
 // I need to include the ".js" to properly import the files. My other project included parcel and that may have automatically allowed exclusion.
 
@@ -9,8 +9,10 @@ export const state = {
 const createPoke = function (data) {
   const poke = data;
   console.log(poke);
+  console.log(typeof poke.id);
 
   const capitalName = toTitleCase(poke.name);
+  if (poke.id > HIGHEST_POKE_ID) return;
 
   // Need to return the types & stats as an array.
   return {
