@@ -26,12 +26,19 @@ const controlTypeButtonResults = async function (type) {
   try {
     resultsPokeView.clear();
 
-    const names = await model.getPokeByType(type);
+    // Return the Names from model
+    const names = await model.getPokeNameByType(type);
 
-    names.map(async (el) => {
-      await model.loadPoke(el);
-      return resultsPokeView.render(model.state.poke);
-    });
+    // Function to return an array of pokemon objects
+    const pokeObjArr = await model.buildPokeObj(names);
+    console.log(pokeObjArr);
+    // Function to generateMarkup based on that array of objects
+
+    // This works but seems incorrect to do this here for MVC architecture
+    // names.map(async (el) => {
+    //   await model.loadPoke(el);
+    //   return resultsPokeView.render(model.state.poke);
+    // });
   } catch (err) {
     console.error(err);
   }

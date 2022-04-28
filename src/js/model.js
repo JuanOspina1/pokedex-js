@@ -48,17 +48,38 @@ export const loadPoke = async function (id) {
   }
 };
 
-export const getPokeByType = async function (type) {
+export const getPokeNameByType = async function (type) {
   try {
+    // Receive the data based on the type
     const data = await getJSON(`${API_URL_TYPE}${type}`);
-    console.log(data);
 
+    // Receive an array of the names
     const res = data.pokemon.map((el) => el.pokemon.name);
-    console.log(res);
+    // console.log(res);
 
-    // The below works for creating a single poke
     return res;
   } catch (err) {
     console.log(err);
+  }
+};
+
+//////////////////////////////////////////////////////////////
+export const buildPokeObj = async function (namesArr) {
+  try {
+    // getting the name works fine
+
+    // The below is undefined??
+    const trialPokeObj = await this.loadPoke(namesArr[0]);
+
+    // const pokeObjArr = namesArr.map(async (el) => {
+    //   const data = await this.loadPoke(el);
+    //   return data;
+    // });
+
+    console.log(trialPokeObj);
+    return trialPokeObj;
+  } catch (err) {
+    console.error(`${err} Building Objs Failed`);
+    throw err;
   }
 };

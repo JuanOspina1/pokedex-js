@@ -5,7 +5,6 @@ import { toTitleCase } from "../helpers.js";
 class ResultsPokeView extends View {
   _parentElement = document.querySelector(".poke-list");
 
-  // I need to find a way to only create a button if a second type exist
   _generateMarkup() {
     return `
       <div class="col">
