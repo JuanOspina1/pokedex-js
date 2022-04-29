@@ -6,6 +6,8 @@ class ResultsPokeView extends View {
   _parentElement = document.querySelector(".poke-list");
 
   _generateMarkup() {
+    // Single Poke Data
+    console.log(this._data);
     return `
       <div class="col">
             <div class="card poke-result" style="width: 18rem">

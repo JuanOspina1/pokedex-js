@@ -17,6 +17,8 @@ export const state = {
     resultsPerPage: RES_PER_PAGE,
     page: 1,
   },
+
+  pokeByType: [],
 };
 
 const createPoke = function (data) {
@@ -63,23 +65,20 @@ export const getPokeNameByType = async function (type) {
   }
 };
 
-//////////////////////////////////////////////////////////////
-export const buildPokeObj = async function (namesArr) {
-  try {
-    // getting the name works fine
+//////////////////////////
+// Pushing each new object into an array
 
-    // The below is undefined??
-    const trialPokeObj = await this.loadPoke(namesArr[0]);
+export const loadPokeArray = function (arr) {
+  const pokeObjArr = [];
 
-    // const pokeObjArr = namesArr.map(async (el) => {
-    //   const data = await this.loadPoke(el);
-    //   return data;
-    // });
-
-    console.log(trialPokeObj);
-    return trialPokeObj;
-  } catch (err) {
-    console.error(`${err} Building Objs Failed`);
-    throw err;
-  }
+  arr.map(async (el) => {
+    const data = await getJSON(`${API_URL_POKE}${el}`);
+    // return if the ID is higher than the
+    if (data.id > HIGHEST_POKE_ID) return;
+    // create a poke for each object
+    const newPoke = createPoke(data);
+    pokeObjArr.push(newPoke);
+  });
+  // console.log(pokeObjArr);
+  state.pokeByType = pokeObjArr;
 };
