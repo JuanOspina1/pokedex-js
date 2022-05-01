@@ -66,19 +66,23 @@ export const getPokeNameByType = async function (type) {
 };
 
 //////////////////////////
-// Pushing each new object into an array
+// Promise.all worked with mapping - i still have undefined values getting through, i need to fix that.
 
-export const loadPokeArray = function (arr) {
-  const pokeObjArr = [];
+// Need to better understand how this worked and how the promise was resolved.
 
-  arr.map(async (el) => {
-    const data = await getJSON(`${API_URL_POKE}${el}`);
-    // return if the ID is higher than the
-    if (data.id > HIGHEST_POKE_ID) return;
-    // create a poke for each object
-    const newPoke = createPoke(data);
-    pokeObjArr.push(newPoke);
-  });
+export const loadPokeArray = async function (arr) {
+  const pokeObjArr = Promise.all(
+    arr.map(async (el) => {
+      const data = await getJSON(`${API_URL_POKE}${el}`);
+      // return if the ID is higher than the
+      if (data.id > HIGHEST_POKE_ID) return;
+      // create a poke for each object
+      const newPoke = createPoke(data);
+      // console.log(newPoke);
+      return newPoke;
+    })
+  );
   // console.log(pokeObjArr);
   state.pokeByType = pokeObjArr;
+  return pokeObjArr;
 };

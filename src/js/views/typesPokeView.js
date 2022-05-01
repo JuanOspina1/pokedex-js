@@ -8,14 +8,15 @@ class TypePokeView extends View {
   _generateMarkup() {
     // arrayOfPokemon
 
+    console.log(Array.isArray(this._data));
     console.log(this._data);
-    // Each element is coming back as undefined.
-    console.log(this._data[0]);
 
-    return resultsPokeView.render(this._data[0]);
+    // Each element is coming back as undefined.
+
+    // return resultsPokeView.render(this._data);
 
     // This is returning an empty string
-    // return this._data.map((el) => resultsPokeView.render(el)).join("");
+    return this._data.map((el) => resultsPokeView.render(el)).join("");
   }
 }
 

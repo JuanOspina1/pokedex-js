@@ -29,9 +29,9 @@ const controlTypeButtonResults = async function (type) {
     const names = await model.getPokeNameByType(type);
 
     // Request and build each poke, then add them to an array in the state
-    model.loadPokeArray(names);
+    const test = await model.loadPokeArray(names);
 
-    typesPokeView.render(model.state.pokeByType);
+    typesPokeView.render(test);
 
     ////////////////////////////////////////////////////////
     // This works but seems incorrect to do this here for MVC architecture
