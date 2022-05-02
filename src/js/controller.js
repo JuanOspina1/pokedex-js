@@ -45,6 +45,7 @@ const controlTypeButtonResults = async function (type) {
 };
 
 // The below works but I need to clear previous search results and clear the pagination buttons
+// Pagination buttons render incorrectly due to the extra undefined values within model.state.search.results
 const controlPagination = function (goToPage) {
   // Render NEW Results
   typesPokeView.render(model.getSearchResultsPage(goToPage));
