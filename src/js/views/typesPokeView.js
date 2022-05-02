@@ -11,11 +11,6 @@ class TypePokeView extends View {
     console.log(Array.isArray(this._data));
     console.log(this._data);
 
-    // Each element is coming back as undefined.
-
-    // return resultsPokeView.render(this._data);
-
-    // This is returning an empty string
     return this._data.map((el) => resultsPokeView.render(el)).join("");
   }
 }

@@ -69,7 +69,7 @@ export const getPokeNameByType = async function (type) {
 // Promise.all worked with mapping - i still have undefined values getting through, i need to fix that.
 
 // Need to better understand how this worked and how the promise was resolved.
-
+/*
 export const loadPokeArray = async function (arr) {
   const pokeObjArr = Promise.all(
     arr.map(async (el) => {
@@ -85,4 +85,22 @@ export const loadPokeArray = async function (arr) {
   // console.log(pokeObjArr);
   state.pokeByType = pokeObjArr;
   return pokeObjArr;
+};
+*/
+
+// Refactoring the above function to try and get the information in the controller directly from the state
+// The solution was to await the pokeObjArr when setting that equal to the state.pokeByType
+export const loadPokeArray = async function (arr) {
+  const pokeObjArr = Promise.all(
+    arr.map(async (el) => {
+      const data = await getJSON(`${API_URL_POKE}${el}`);
+      // return if the ID is higher than the
+      if (data.id > HIGHEST_POKE_ID) return;
+      // create a poke for each object
+      const newPoke = createPoke(data);
+      // console.log(newPoke);
+      return newPoke;
+    })
+  );
+  state.pokeByType = await pokeObjArr;
 };
