@@ -7,6 +7,7 @@ class TypePokeView extends View {
   // This is not generating the cards for each poke in the array. No error message, not sure what is wrong
   _generateMarkup() {
     // arrayOfPokemon
+    this._clear();
 
     console.log(Array.isArray(this._data));
     console.log(this._data);

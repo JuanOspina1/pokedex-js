@@ -11,4 +11,8 @@ export default class View {
     // Each view has its corresponding parent element
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
+
+  _clear() {
+    this._parentElement.innerHTML = "";
+  }
 }
