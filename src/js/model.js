@@ -80,13 +80,14 @@ export const loadPokeArray = async function (arr) {
       if (data.id > HIGHEST_POKE_ID) return;
       // create a poke for each object
       const newPoke = createPoke(data);
-      // console.log(newPoke);
+      console.log(newPoke);
       return newPoke;
     })
   );
 
-  // Store them in the state
-  state.search.results = await pokeObjArr;
+  const resArr = await pokeObjArr;
+  // Store them in the state after filtering out undefined values
+  state.search.results = resArr.filter((poke) => typeof poke !== "undefined");
 };
 
 /////////////////////////////////
