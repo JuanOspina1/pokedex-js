@@ -10,13 +10,14 @@ import { getJSON, toTitleCase } from "./helpers.js";
 export const state = {
   poke: {},
 
-  // Not sure how to implement the search state properly
   search: {
     query: "",
     results: [],
     resultsPerPage: RES_PER_PAGE,
     page: 1,
   },
+  // This will be based on local storage
+  saved: [],
 };
 
 const createPoke = function (data) {
@@ -88,6 +89,8 @@ export const loadPokeArray = async function (arr) {
   const resArr = await pokeObjArr;
   // Store them in the state after filtering out undefined values
   state.search.results = resArr.filter((poke) => typeof poke !== "undefined");
+
+  // Could better organize the array so the order appears from smallest to greatest
 };
 
 /////////////////////////////////
@@ -106,3 +109,29 @@ export const getSearchResultsPage = function (page = state.search.page) {
   // Create a shallow copy of the array
   return state.search.results.slice(start, end);
 };
+
+////////////////////////////
+// Saving pokemon to the list
+
+export const addSavedPoke = function (selectedPokeEl) {
+  console.log(selectedPokeEl);
+
+  console.log(selectedPokeEl.dataset.id);
+  /*
+  state.saved.push(poke);
+
+  // I need to think about this logic further since you would be able to choose from the list.
+  // I would need to compare both state.poke.id and state.poke.search.results
+  if (poke.id === state.poke.id) state.poke.saved = true;
+  */
+};
+
+const persistSaved = function () {
+  localStorage.setItem("saved", JSON.stringify(state.bookmarks));
+};
+
+const init = function () {
+  const storage = localStorage.getItem("saved");
+  if (storage) state.saved = JSON.parse(storage);
+};
+// init();

@@ -4,7 +4,6 @@ import resultsPokeView from "./resultsPokeView.js";
 class TypePokeView extends View {
   _parentElement = document.querySelector(".poke-list");
 
-  // This is not generating the cards for each poke in the array. No error message, not sure what is wrong
   _generateMarkup() {
     // arrayOfPokemon
     this._clear();

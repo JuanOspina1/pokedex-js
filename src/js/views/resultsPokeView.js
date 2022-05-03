@@ -5,6 +5,15 @@ import { toTitleCase } from "../helpers.js";
 class ResultsPokeView extends View {
   _parentElement = document.querySelector(".poke-list");
 
+  // The below selects the closest chosen poke that has had the pokeball icon selected
+  addHandlerSavePoke(handler) {
+    this._parentElement.addEventListener("click", function (e) {
+      const selectedPoke = e.target.closest(".saved-status");
+      if (!selectedPoke) return;
+      handler(selectedPoke);
+    });
+  }
+
   _generateMarkup() {
     // Single Poke Data
     console.log(this._data);
@@ -19,12 +28,22 @@ class ResultsPokeView extends View {
                 <p class="poke-id">
                 <span class="number-prefix">#</span>
                 ${this._data.id}
+
+                <span class= "icon saved-status" data-id="${
+                  this._data.id
+                }"><img src="${
+      this._data.saved
+        ? "src/icons/saved-pokeball-svg.svg"
+        : "src/icons/free-pokeball-svg.svg"
+    }"/> </span>
+
                 </p>
                 <h6 class="card-text">Base Stats:</h6>
                 <ul>
                 ${this._data.stats.map(this._generateMarkupStats).join("")}
                 </ul>
                 ${this._data.types.map(this._generateMarkupTypes).join("")}
+                
               </div>
             </div>
           </div>

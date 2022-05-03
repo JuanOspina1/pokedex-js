@@ -5,6 +5,7 @@ import initialView from "./views/initialView.js";
 import typesPokeView from "./views/typesPokeView.js";
 import { RESET_PAGE } from "./config.js";
 import paginationView from "./views/paginationView.js";
+import savedPokeView from "./views/savedPokeView.js";
 
 const controlPokeSearchResults = async function () {
   try {
@@ -44,8 +45,15 @@ const controlTypeButtonResults = async function (type) {
   }
 };
 
-// The below works but I need to clear previous search results and clear the pagination buttons
-// Pagination buttons render incorrectly due to the extra undefined values within model.state.search.results
+const controlSavingPoke = function (selectedPokeEl) {
+  // Take the selected element and send it to the model
+  model.addSavedPoke(selectedPokeEl);
+
+  // search in the model.search.results array for the obj with the matching id <- this logic would only work for poke searched by type
+  // I can create an if statement that uses || to see if it matches model.poke OR || model.search.poke <- this logice would be implemented in the model
+  // update the saved poke list -> need to create the update feature
+};
+
 const controlPagination = function (goToPage) {
   // Render NEW Results
   typesPokeView.render(model.getSearchResultsPage(goToPage));
@@ -63,5 +71,6 @@ const init = function () {
   searchView.addHandlerSelectType(controlTypeButtonResults);
   initialView.addHandlerEnterPokedex(controlEnteringPokedex);
   paginationView.addHandlerClick(controlPagination);
+  resultsPokeView.addHandlerSavePoke(controlSavingPoke);
 };
 init();
