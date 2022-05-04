@@ -34,7 +34,7 @@ const createPoke = function (data) {
     id: poke.id,
     types: poke.types,
     stats: poke.stats,
-    isSaved: false,
+    // isSaved: false,
   };
 };
 
@@ -43,12 +43,18 @@ export const loadPoke = async function (id) {
     // Need to do validation - if number is higher than HIGHEST_POKE_ID or not a valid name
     const validatedId = id.toString().toLowerCase();
     state.search.query = validatedId;
+
+    // Need to verify if the id or name already exist in state.poke so we do not make the call again OR we can replace it in the array to be first in line and delete the old card in the view
     const data = await getJSON(`${API_URL_POKE}${validatedId}`);
     // console.log(data);
 
     state.poke = createPoke(data);
+    if (state.saved.some((poke) => poke.id === state.poke.id))
+      state.poke.isSaved = true;
+    else state.poke.isSaved = false;
+
     state.search.results.push(state.poke);
-    // The results array looks fine with each poke having its corresponding ID.
+
     console.log(state.search.results);
   } catch (err) {
     console.error(`${err} 🤢🤢🤢`);
@@ -114,11 +120,8 @@ export const getSearchResultsPage = function (page = state.search.page) {
 
 ////////////////////////////
 // Saving pokemon to the list
+// Need to verify if the poke is already saved so it cannot be saved twice.
 export const addSavedPoke = function (selectedPokeEl) {
-  // console.log(selectedPokeEl.dataset.id);
-  // Need to find the matching poke
-  // console.log(state.poke);
-  // console.log(state.search.results);
   const matchingPoke = state.search.results.find(
     ({ id }) => id === +selectedPokeEl.dataset.id
   );

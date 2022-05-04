@@ -32,7 +32,7 @@ class ResultsPokeView extends View {
                 <span class= "icon saved-status" data-id="${
                   this._data.id
                 }"><img src="${
-      this._data.saved
+      this._data.isSaved
         ? "src/icons/saved-pokeball-svg.svg"
         : "src/icons/free-pokeball-svg.svg"
     }"/> </span>
