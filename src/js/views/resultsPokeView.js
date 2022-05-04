@@ -15,7 +15,7 @@ class ResultsPokeView extends View {
   }
 
   _generateMarkup() {
-    // Single Poke Data
+    // to implement pagination, we may need to process this as an array and then map through it
     console.log(this._data);
     return `
       <div class="col">

@@ -17,7 +17,14 @@ const controlPokeSearchResults = async function () {
 
     // Load search result - currently only 1
     await model.loadPoke(result);
-    resultsPokeView.render(model.state.poke);
+
+    // They load on the first page past 8 but once we enter the second page and come back, they are correct.
+    // resultsPokeView.render(model.state.poke);
+
+    // I need to refactor generateMarkups to receive this as an array - this may affect resultspokeview & typespokeview
+    resultsPokeView.render(model.getSearchResultsPage(RESET_PAGE));
+
+    paginationView.render(model.state.search);
     searchView._clearInput();
   } catch (err) {
     console.error(`${err}, 💥`);
