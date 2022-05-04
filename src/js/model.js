@@ -34,18 +34,22 @@ const createPoke = function (data) {
     id: poke.id,
     types: poke.types,
     stats: poke.stats,
+    isSaved: false,
   };
 };
 
 export const loadPoke = async function (id) {
   try {
     // Need to do validation - if number is higher than HIGHEST_POKE_ID or not a valid name
-    state.search.query = id;
-    const data = await getJSON(`${API_URL_POKE}${id}`);
+    const validatedId = id.toString().toLowerCase();
+    state.search.query = validatedId;
+    const data = await getJSON(`${API_URL_POKE}${validatedId}`);
     // console.log(data);
 
     state.poke = createPoke(data);
     state.search.results.push(state.poke);
+    // The results array looks fine with each poke having its corresponding ID.
+    console.log(state.search.results);
   } catch (err) {
     console.error(`${err} 🤢🤢🤢`);
     throw err;
@@ -77,7 +81,7 @@ export const loadPokeArray = async function (arr) {
   const pokeObjArr = Promise.all(
     arr.map(async (el) => {
       const data = await getJSON(`${API_URL_POKE}${el}`);
-      // return if the ID is higher than the
+      // return if the ID is higher than the HIGHEST
       if (data.id > HIGHEST_POKE_ID) return;
       // create a poke for each object
       const newPoke = createPoke(data);
@@ -89,8 +93,6 @@ export const loadPokeArray = async function (arr) {
   const resArr = await pokeObjArr;
   // Store them in the state after filtering out undefined values
   state.search.results = resArr.filter((poke) => typeof poke !== "undefined");
-
-  // Could better organize the array so the order appears from smallest to greatest
 };
 
 /////////////////////////////////
@@ -112,26 +114,29 @@ export const getSearchResultsPage = function (page = state.search.page) {
 
 ////////////////////////////
 // Saving pokemon to the list
-
 export const addSavedPoke = function (selectedPokeEl) {
-  console.log(selectedPokeEl);
+  // console.log(selectedPokeEl.dataset.id);
+  // Need to find the matching poke
+  // console.log(state.poke);
+  // console.log(state.search.results);
+  const matchingPoke = state.search.results.find(
+    ({ id }) => id === +selectedPokeEl.dataset.id
+  );
+  // console.log(matchingPoke);
+  // Need to mark the matching poke as isSaved = true
+  matchingPoke.isSaved = true;
+  // Need to push the matching poke to the saved list
+  state.saved.push(matchingPoke);
 
-  console.log(selectedPokeEl.dataset.id);
-  /*
-  state.saved.push(poke);
-
-  // I need to think about this logic further since you would be able to choose from the list.
-  // I would need to compare both state.poke.id and state.poke.search.results
-  if (poke.id === state.poke.id) state.poke.saved = true;
-  */
+  persistSaved();
 };
 
 const persistSaved = function () {
-  localStorage.setItem("saved", JSON.stringify(state.bookmarks));
+  localStorage.setItem("saved", JSON.stringify(state.saved));
 };
 
 const init = function () {
   const storage = localStorage.getItem("saved");
   if (storage) state.saved = JSON.parse(storage);
 };
-// init();
+init();

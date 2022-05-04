@@ -49,9 +49,10 @@ const controlSavingPoke = function (selectedPokeEl) {
   // Take the selected element and send it to the model
   model.addSavedPoke(selectedPokeEl);
 
-  // search in the model.search.results array for the obj with the matching id <- this logic would only work for poke searched by type
-  // I can create an if statement that uses || to see if it matches model.poke OR || model.search.poke <- this logice would be implemented in the model
-  // update the saved poke list -> need to create the update feature
+  // Update the resultsView
+
+  // update the Saved Poke! list
+  savedPokeView.render(model.state.saved);
 };
 
 const controlPagination = function (goToPage) {
@@ -62,11 +63,16 @@ const controlPagination = function (goToPage) {
   paginationView.render(model.state.search);
 };
 
+const controlSavedListInit = function () {
+  savedPokeView.render(model.state.saved);
+};
+
 const controlEnteringPokedex = function () {
   initialView.transitionEntrance();
 };
 
 const init = function () {
+  savedPokeView.addHandlerRenderInit(controlSavedListInit);
   searchView.addHandlerPokeSearch(controlPokeSearchResults);
   searchView.addHandlerSelectType(controlTypeButtonResults);
   initialView.addHandlerEnterPokedex(controlEnteringPokedex);

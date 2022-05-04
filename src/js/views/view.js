@@ -9,7 +9,7 @@ export default class View {
     const markup = this._generateMarkup();
 
     // Each view has its corresponding parent element
-    this._parentElement.insertAdjacentHTML("afterbegin", markup);
+    this._parentElement.insertAdjacentHTML("beforeend", markup);
   }
 
   _clear() {
