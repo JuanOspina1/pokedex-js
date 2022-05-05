@@ -11,7 +11,7 @@ class TypePokeView extends View {
     console.log(Array.isArray(this._data));
     console.log(this._data);
 
-    return this._data.map((el) => resultsPokeView.render(el)).join("");
+    return resultsPokeView.render(this._data);
   }
 }
 

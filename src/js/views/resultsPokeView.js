@@ -8,31 +8,35 @@ class ResultsPokeView extends View {
   // The below selects the closest chosen poke that has had the pokeball icon selected
   addHandlerSavePoke(handler) {
     this._parentElement.addEventListener("click", function (e) {
+      e.preventDefault();
       const selectedPoke = e.target.closest(".saved-status");
       if (!selectedPoke) return;
       handler(selectedPoke);
     });
   }
 
+  // Run markup through an array to utilize pagination from individual poke searches
   _generateMarkup() {
-    // to implement pagination, we may need to process this as an array and then map through it
-    console.log(this._data);
+    /////////////////////////////////
+    // clearing here will not allow me to grab the current state when I try to update
+    // this._clear();
+
+    return this._data.map((el) => this._generateMarkupBody(el)).join("");
+  }
+
+  _generateMarkupBody(el) {
     return `
       <div class="col">
             <div class="card poke-result" style="width: 18rem">
-              <img src="${this._data.sprite}" class="card-img-top" alt="${
-      this._data.name
-    }" />
+              <img src="${el.sprite}" class="card-img-top" alt="${el.name}" />
               <div class="card-body">
-                <h5 class="card-title">${this._data.name}</h5>
+                <h5 class="card-title">${el.name}</h5>
                 <p class="poke-id">
                 <span class="number-prefix">#</span>
-                ${this._data.id}
+                ${el.id}
 
-                <span class= "icon saved-status" data-id="${
-                  this._data.id
-                }"><img src="${
-      this._data.isSaved
+                <span class= "icon saved-status" data-id="${el.id}"><img src="${
+      el.isSaved
         ? "src/icons/saved-pokeball-svg.svg"
         : "src/icons/free-pokeball-svg.svg"
     }"/> </span>
@@ -40,9 +44,9 @@ class ResultsPokeView extends View {
                 </p>
                 <h6 class="card-text">Base Stats:</h6>
                 <ul>
-                ${this._data.stats.map(this._generateMarkupStats).join("")}
+                ${el.stats.map(this._generateMarkupStats).join("")}
                 </ul>
-                ${this._data.types.map(this._generateMarkupTypes).join("")}
+                ${el.types.map(this._generateMarkupTypes).join("")}
                 
               </div>
             </div>

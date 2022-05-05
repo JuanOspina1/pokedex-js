@@ -15,14 +15,9 @@ const controlPokeSearchResults = async function () {
     const result = searchView.getSearchResult();
     if (!result) return;
 
-    // Load search result - currently only 1
     await model.loadPoke(result);
 
-    // They load on the first page past 8 but once we enter the second page and come back, they are correct.
-    // resultsPokeView.render(model.state.poke);
-
-    // I need to refactor generateMarkups to receive this as an array - this may affect resultspokeview & typespokeview
-    resultsPokeView.render(model.getSearchResultsPage(RESET_PAGE));
+    resultsPokeView.render(model.getSearchResultsPage());
 
     paginationView.render(model.state.search);
     searchView._clearInput();
@@ -31,7 +26,6 @@ const controlPokeSearchResults = async function () {
   }
 };
 
-// Need to refactor the below to generate results based on the current page
 const controlTypeButtonResults = async function (type) {
   try {
     // resultsPokeView.clear();
@@ -54,14 +48,18 @@ const controlTypeButtonResults = async function (type) {
 
 const controlSavingPoke = function (selectedPokeEl) {
   // Take the selected element and send it to the model
+  // Need to validate if the poke is already saved, if so, we need to remove it from the list
   model.addSavedPoke(selectedPokeEl);
 
-  // Update the resultsView
+  // Update the resultsView to change the color - this is working but since we are not clearing the view, they are loading on top of each other
+  resultsPokeView.update(model.getSearchResultsPage());
 
   // update the Saved Poke! list
   savedPokeView.render(model.state.saved);
 };
 
+////////////////////////////////
+// If you add another poke after page one, you are returned to page one.
 const controlPagination = function (goToPage) {
   // Render NEW Results
   typesPokeView.render(model.getSearchResultsPage(goToPage));

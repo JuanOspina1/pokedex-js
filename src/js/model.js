@@ -55,7 +55,7 @@ export const loadPoke = async function (id) {
 
     state.search.results.push(state.poke);
 
-    console.log(state.search.results);
+    // console.log(state.search.results);
   } catch (err) {
     console.error(`${err} 🤢🤢🤢`);
     throw err;
@@ -91,7 +91,10 @@ export const loadPokeArray = async function (arr) {
       if (data.id > HIGHEST_POKE_ID) return;
       // create a poke for each object
       const newPoke = createPoke(data);
-      console.log(newPoke);
+      if (state.saved.some((poke) => poke.id === state.poke.id))
+        state.poke.isSaved = true;
+      else state.poke.isSaved = false;
+      // console.log(newPoke);
       return newPoke;
     })
   );
@@ -126,6 +129,9 @@ export const addSavedPoke = function (selectedPokeEl) {
     ({ id }) => id === +selectedPokeEl.dataset.id
   );
   // console.log(matchingPoke);
+
+  // IF MATCHING POKE EXIST IN isSaved ARRAY - RETURN
+
   // Need to mark the matching poke as isSaved = true
   matchingPoke.isSaved = true;
   // Need to push the matching poke to the saved list
