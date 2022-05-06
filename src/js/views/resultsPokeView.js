@@ -60,7 +60,7 @@ class ResultsPokeView extends View {
     const capitalType = toTitleCase(types.type.name);
 
     return `
-    <a class="btn ${types.type.name}">${capitalType}</a>
+    <a class="btn type-btn ${types.type.name}">${capitalType}</a>
     `;
   }
 

@@ -42,7 +42,6 @@ body {
   margin: 15px 5px;
 }
 
-/* I have to see where this places the pokedex image after click */
 .hide-pokedex {
   transform: translateY(-50rem);
   height: 0;
@@ -67,6 +66,10 @@ body {
 
 .dropdown-item:hover {
   cursor: pointer;
+}
+
+.type-btn:hover {
+  cursor: default;
 }
 
 /* ICONS */

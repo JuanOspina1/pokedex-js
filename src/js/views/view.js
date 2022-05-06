@@ -8,7 +8,7 @@ export default class View {
     // Generate the markup for each view
     const markup = this._generateMarkup();
 
-    // Clearing here is causing issues - we need to clear somewhere or else the single added poke will stack on the cards on the page.
+    // Clearing here is causing issues - we are clearing in the controller - this allows update to work AND functions properly with adding single poke.
     // this._clear();
     this._parentElement.insertAdjacentHTML("beforeend", markup);
   }
@@ -16,14 +16,14 @@ export default class View {
   // Review how this functionality works - get more familiar with DOM methods
   update(data) {
     this._data = data;
-    console.log(this._data);
+    // console.log(this._data);
     const newMarkup = this._generateMarkup();
     // console.log(newMarkup);
 
     // convert markup string to dom
     const newDOM = document.createRange().createContextualFragment(newMarkup);
     // Working perfectly up to this point
-    console.log(newDOM);
+    // console.log(newDOM);
     const newElements = Array.from(newDOM.querySelectorAll("*"));
 
     // curElements returns an empty array
@@ -34,7 +34,7 @@ export default class View {
     // Comparing node elements
     newElements.forEach((newEl, i) => {
       const curEl = curElements[i];
-      console.log(curEl, newEl.isEqualNode(curEl));
+      // console.log(curEl, newEl.isEqualNode(curEl));
 
       // Updates changed text
       /*
@@ -57,5 +57,18 @@ export default class View {
 
   _clear() {
     this._parentElement.innerHTML = "";
+  }
+
+  renderSpinner() {
+    const markup = `
+    <div class="text-center">
+
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+</div>
+    `;
+    this._clear();
+    this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 }

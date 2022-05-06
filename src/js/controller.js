@@ -9,7 +9,9 @@ import savedPokeView from "./views/savedPokeView.js";
 
 const controlPokeSearchResults = async function () {
   try {
+    // The array of type poke is still showing because they are still in the array that we render below
     // Add a spinner for searching
+    resultsPokeView.clear();
 
     // Get search value
     const result = searchView.getSearchResult();
@@ -48,10 +50,13 @@ const controlTypeButtonResults = async function (type) {
 
 const controlSavingPoke = function (selectedPokeEl) {
   // Take the selected element and send it to the model
-  // Need to validate if the poke is already saved, if so, we need to remove it from the list
-  model.addSavedPoke(selectedPokeEl);
 
-  // Update the resultsView to change the color - this is working but since we are not clearing the view, they are loading on top of each other
+  // Need to validate if the poke is already saved, if so, we need to remove it from the list
+  if (!model.state.saved.some((el) => el.id === +selectedPokeEl.dataset.id))
+    model.addSavedPoke(selectedPokeEl);
+  else model.deleteSavedPoke(selectedPokeEl);
+
+  // Update the resultsView to change the color
   resultsPokeView.update(model.getSearchResultsPage());
 
   // update the Saved Poke! list

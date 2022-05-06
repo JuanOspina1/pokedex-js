@@ -40,6 +40,7 @@ const createPoke = function (data) {
 
 export const loadPoke = async function (id) {
   try {
+    state.search.results = [];
     // Need to do validation - if number is higher than HIGHEST_POKE_ID or not a valid name
     const validatedId = id.toString().toLowerCase();
     state.search.query = validatedId;
@@ -91,9 +92,9 @@ export const loadPokeArray = async function (arr) {
       if (data.id > HIGHEST_POKE_ID) return;
       // create a poke for each object
       const newPoke = createPoke(data);
-      if (state.saved.some((poke) => poke.id === state.poke.id))
-        state.poke.isSaved = true;
-      else state.poke.isSaved = false;
+      if (state.saved.some((poke) => poke.id === newPoke.id))
+        newPoke.isSaved = true;
+      else newPoke.isSaved = false;
       // console.log(newPoke);
       return newPoke;
     })
@@ -125,12 +126,9 @@ export const getSearchResultsPage = function (page = state.search.page) {
 // Saving pokemon to the list
 // Need to verify if the poke is already saved so it cannot be saved twice.
 export const addSavedPoke = function (selectedPokeEl) {
-  const matchingPoke = state.search.results.find(
-    ({ id }) => id === +selectedPokeEl.dataset.id
-  );
-  // console.log(matchingPoke);
-
+  const matchingPoke = findMatchingPoke(selectedPokeEl);
   // IF MATCHING POKE EXIST IN isSaved ARRAY - RETURN
+  if (state.saved.some((el) => el.id === matchingPoke.id)) return;
 
   // Need to mark the matching poke as isSaved = true
   matchingPoke.isSaved = true;
@@ -138,6 +136,32 @@ export const addSavedPoke = function (selectedPokeEl) {
   state.saved.push(matchingPoke);
 
   persistSaved();
+};
+
+export const deleteSavedPoke = function (selectedPokeEl) {
+  const savedIndex = state.saved.findIndex(
+    (el) => el.id === +selectedPokeEl.dataset.id
+  );
+  //Remove it from the saved array
+  state.saved.splice(savedIndex, 1);
+
+  // Find the matching poke in the results array
+  const matchingPoke = findMatchingPoke(selectedPokeEl);
+  console.log(matchingPoke);
+  // Set isSaved to false
+  matchingPoke.isSaved = false;
+
+  const resultsIndex = state.search.results.findIndex(
+    (el) => el.id === +selectedPokeEl.dataset.id
+  );
+  // Replace the matching poke in the results array
+  state.search.results.splice(resultsIndex, 1, matchingPoke);
+
+  persistSaved();
+};
+
+const findMatchingPoke = function (element) {
+  return state.search.results.find(({ id }) => id === +element.dataset.id);
 };
 
 const persistSaved = function () {
