@@ -8,8 +8,8 @@ class TypePokeView extends View {
     // arrayOfPokemon
     this._clear();
 
-    console.log(Array.isArray(this._data));
-    console.log(this._data);
+    // console.log(Array.isArray(this._data));
+    // console.log(this._data);
 
     return resultsPokeView.render(this._data);
   }

@@ -146,6 +146,8 @@ export const deleteSavedPoke = function (selectedPokeEl) {
   state.saved.splice(savedIndex, 1);
 
   // Find the matching poke in the results array
+
+  console.log(selectedPokeEl);
   const matchingPoke = findMatchingPoke(selectedPokeEl);
   console.log(matchingPoke);
   // Set isSaved to false
@@ -158,6 +160,18 @@ export const deleteSavedPoke = function (selectedPokeEl) {
   state.search.results.splice(resultsIndex, 1, matchingPoke);
 
   persistSaved();
+};
+
+export const resultsSaved = function () {
+  // I need to test how this affects the results array moving forward.
+  // state.search.results = state.saved;
+
+  // Diff method - clear it , then push the saved array - THIS WORKED!
+  state.search.results = [];
+
+  state.search.results.push(...state.saved);
+
+  console.log(state.search.results);
 };
 
 const findMatchingPoke = function (element) {

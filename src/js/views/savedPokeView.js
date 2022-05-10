@@ -6,6 +6,18 @@ class SavedPokeView extends View {
   addHandlerRenderInit(handler) {
     window.addEventListener("load", handler);
   }
+
+  addHandlerPickSavedPoke(handler) {
+    this._parentElement.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const selectedEl = e.target.closest(".dropdown-item");
+      const selectedPoke = selectedEl.dataset.type;
+      // console.log(selectedPoke);
+
+      handler(selectedPoke);
+    });
+  }
   // This generate markup will fill in the saved poke list - need to work on the styling for these tabs
   _generateMarkup() {
     this._clear();

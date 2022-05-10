@@ -6,6 +6,7 @@ import typesPokeView from "./views/typesPokeView.js";
 import { RESET_PAGE } from "./config.js";
 import paginationView from "./views/paginationView.js";
 import savedPokeView from "./views/savedPokeView.js";
+import savedBtnView from "./views/savedBtnView.js";
 
 const controlPokeSearchResults = async function () {
   try {
@@ -50,7 +51,6 @@ const controlTypeButtonResults = async function (type) {
 
 const controlSavingPoke = function (selectedPokeEl) {
   // Take the selected element and send it to the model
-
   // Need to validate if the poke is already saved, if so, we need to remove it from the list
   if (!model.state.saved.some((el) => el.id === +selectedPokeEl.dataset.id))
     model.addSavedPoke(selectedPokeEl);
@@ -61,6 +61,33 @@ const controlSavingPoke = function (selectedPokeEl) {
 
   // update the Saved Poke! list
   savedPokeView.render(model.state.saved);
+};
+
+// Selected a poke from the saved list
+const controlSavedListPoke = async function (id) {
+  try {
+    resultsPokeView.clear();
+
+    await model.loadPoke(id);
+
+    resultsPokeView.render(model.getSearchResultsPage());
+
+    paginationView.render(model.state.search);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const controlSavedPokeButton = function () {
+  console.log("btn clicked");
+
+  resultsPokeView.clear();
+
+  model.resultsSaved();
+
+  resultsPokeView.render(model.getSearchResultsPage());
+
+  paginationView.render(model.state.search);
 };
 
 ////////////////////////////////
@@ -88,5 +115,7 @@ const init = function () {
   initialView.addHandlerEnterPokedex(controlEnteringPokedex);
   paginationView.addHandlerClick(controlPagination);
   resultsPokeView.addHandlerSavePoke(controlSavingPoke);
+  savedPokeView.addHandlerPickSavedPoke(controlSavedListPoke);
+  savedBtnView.addHandlerShowAllSaved(controlSavedPokeButton);
 };
 init();
