@@ -60,6 +60,7 @@ export default class View {
   }
 
   renderSpinner() {
+    console.log("spinner ran");
     const markup = `
     <div class="text-center">
 

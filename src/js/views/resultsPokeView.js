@@ -15,12 +15,7 @@ class ResultsPokeView extends View {
     });
   }
 
-  // Run markup through an array to utilize pagination from individual poke searches
   _generateMarkup() {
-    /////////////////////////////////
-    // clearing here will not allow me to grab the current state when I try to update
-    // this._clear();
-
     return this._data.map((el) => this._generateMarkupBody(el)).join("");
   }
 

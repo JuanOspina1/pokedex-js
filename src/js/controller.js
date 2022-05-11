@@ -12,6 +12,10 @@ const controlPokeSearchResults = async function () {
   try {
     // The array of type poke is still showing because they are still in the array that we render below
     // Add a spinner for searching
+
+    // Clear any previous results
+    resultsPokeView.renderSpinner();
+
     resultsPokeView.clear();
 
     // Get search value
@@ -32,12 +36,12 @@ const controlPokeSearchResults = async function () {
 const controlTypeButtonResults = async function (type) {
   try {
     // resultsPokeView.clear();
+    resultsPokeView.renderSpinner();
 
     // Return the Names from model
     const names = await model.getPokeNameByType(type);
 
     await model.loadPokeArray(names);
-    // console.log(model.state.pokeByType);
 
     // Render based on the results limited by pagination for the 1st page - first 8 search results
     typesPokeView.render(model.getSearchResultsPage(RESET_PAGE));
@@ -79,8 +83,6 @@ const controlSavedListPoke = async function (id) {
 };
 
 const controlSavedPokeButton = function () {
-  console.log("btn clicked");
-
   resultsPokeView.clear();
 
   model.resultsSaved();

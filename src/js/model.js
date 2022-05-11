@@ -81,28 +81,32 @@ export const getPokeNameByType = async function (type) {
 
 // The solution was to await the pokeObjArr when setting that equal to the state.search.results
 export const loadPokeArray = async function (arr) {
-  // Clear the previous results
-  state.search.results = [];
+  try {
+    // Clear the previous results
+    state.search.results = [];
 
-  // Get all of the poke from the array
-  const pokeObjArr = Promise.all(
-    arr.map(async (el) => {
-      const data = await getJSON(`${API_URL_POKE}${el}`);
-      // return if the ID is higher than the HIGHEST
-      if (data.id > HIGHEST_POKE_ID) return;
-      // create a poke for each object
-      const newPoke = createPoke(data);
-      if (state.saved.some((poke) => poke.id === newPoke.id))
-        newPoke.isSaved = true;
-      else newPoke.isSaved = false;
-      // console.log(newPoke);
-      return newPoke;
-    })
-  );
+    // Get all of the poke from the array
+    const pokeObjArr = Promise.all(
+      arr.map(async (el) => {
+        const data = await getJSON(`${API_URL_POKE}${el}`);
+        // return if the ID is higher than the HIGHEST
+        if (data.id > HIGHEST_POKE_ID) return;
+        // create a poke for each object
+        const newPoke = createPoke(data);
+        if (state.saved.some((poke) => poke.id === newPoke.id))
+          newPoke.isSaved = true;
+        else newPoke.isSaved = false;
+        // console.log(newPoke);
+        return newPoke;
+      })
+    );
 
-  const resArr = await pokeObjArr;
-  // Store them in the state after filtering out undefined values
-  state.search.results = resArr.filter((poke) => typeof poke !== "undefined");
+    const resArr = await pokeObjArr;
+    // Store them in the state after filtering out undefined values
+    state.search.results = resArr.filter((poke) => typeof poke !== "undefined");
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 /////////////////////////////////
@@ -163,15 +167,11 @@ export const deleteSavedPoke = function (selectedPokeEl) {
 };
 
 export const resultsSaved = function () {
-  // I need to test how this affects the results array moving forward.
-  // state.search.results = state.saved;
-
-  // Diff method - clear it , then push the saved array - THIS WORKED!
   state.search.results = [];
 
   state.search.results.push(...state.saved);
 
-  console.log(state.search.results);
+  // console.log(state.search.results);
 };
 
 const findMatchingPoke = function (element) {
