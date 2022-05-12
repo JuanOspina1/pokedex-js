@@ -10,15 +10,10 @@ import savedBtnView from "./views/savedBtnView.js";
 
 const controlPokeSearchResults = async function () {
   try {
-    // The array of type poke is still showing because they are still in the array that we render below
-    // Add a spinner for searching
-
-    // Clear any previous results
     resultsPokeView.renderSpinner();
 
     resultsPokeView.clear();
 
-    // Get search value
     const result = searchView.getSearchResult();
     if (!result) return;
 
@@ -35,7 +30,6 @@ const controlPokeSearchResults = async function () {
 
 const controlTypeButtonResults = async function (type) {
   try {
-    // resultsPokeView.clear();
     resultsPokeView.renderSpinner();
 
     // Return the Names from model

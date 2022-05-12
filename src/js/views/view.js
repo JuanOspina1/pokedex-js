@@ -10,6 +10,7 @@ export default class View {
 
     // Clearing here is causing issues - we are clearing in the controller - this allows update to work AND functions properly with adding single poke.
     // this._clear();
+    // console.log(markup);
     this._parentElement.insertAdjacentHTML("beforeend", markup);
   }
 

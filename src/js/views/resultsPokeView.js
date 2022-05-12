@@ -16,6 +16,8 @@ class ResultsPokeView extends View {
   }
 
   _generateMarkup() {
+    // Undefined shows if we search by type
+    // Undefined shows after pagination is used in saved poke
     return this._data.map((el) => this._generateMarkupBody(el)).join("");
   }
 

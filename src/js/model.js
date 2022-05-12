@@ -120,7 +120,7 @@ export const getSearchResultsPage = function (page = state.search.page) {
   const start = (page - 1) * state.search.resultsPerPage; //0;
 
   // Multiply the page * the results per page to create the end
-  const end = page * state.search.resultsPerPage; //9;
+  const end = page * state.search.resultsPerPage;
 
   // Create a shallow copy of the array
   return state.search.results.slice(start, end);
