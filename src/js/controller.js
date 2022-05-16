@@ -19,7 +19,7 @@ const controlPokeSearchResults = async function () {
 
     await model.loadPoke(result);
 
-    resultsPokeView.render(model.getSearchResultsPage());
+    resultsPokeView.render(model.getSearchResultsPage(RESET_PAGE));
 
     paginationView.render(model.state.search);
     searchView._clearInput();
