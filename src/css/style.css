@@ -1,5 +1,6 @@
 body {
-  background-image: url("https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png");
+  /* background-image: url("https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png"); */
+  background-image: url("../images/cool-background.png");
 }
 
 .welcome-post {
@@ -26,20 +27,68 @@ body {
   margin-top: 100px;
 }
 
+/* Nav */
+
+.navbar {
+  border-radius: 25px;
+  display: flex;
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    0deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(253, 187, 45, 1) 100%
+  );
+}
+
 .main-body {
-  background-image: url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
+  /* background-image: url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png"); */
+  background-image: "../images/cool-background.png";
+
   padding-top: 10px;
-  /* height: 100px; */
 }
 
 .results-view {
   margin: 5px;
   flex-direction: row;
-  /* flex-wrap: wrap; */
+
+  border-radius: 25px;
+  min-height: 90vh;
 }
 
 .poke-result {
+  border-radius: 25px;
   margin: 15px 5px;
+  /* background-color: #539ddf; */
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    0deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(253, 187, 45, 1) 100%
+  );
+  color: white;
+}
+
+.pagination {
+  padding-top: 17px;
+}
+
+.pagination-btn {
+  background-color: #0f1c70;
+  color: white;
+  margin-left: 10px;
+}
+
+.search-btn {
+  background-color: #0f1c70;
+  color: white;
+}
+
+.number-prefix {
+  color: white;
+}
+
+.card-body {
+  color: white;
 }
 
 .hide-pokedex {
@@ -66,6 +115,14 @@ body {
 
 .dropdown-item:hover {
   cursor: pointer;
+}
+
+.saved-col {
+}
+
+.type-btn {
+  color: white;
+  font-weight: bold;
 }
 
 .type-btn:hover {

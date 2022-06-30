@@ -25,19 +25,20 @@
     <div class="container min-vh-100 main-body hidden">
       <div class="container nav-container">
         <nav class="navbar navbar-light bg-light">
-          <div class="container-fluid search-container">
-            <form class="d-flex search">
+          <div class="container-fluid search-container row">
+            <form class="d-flex search  col-sm-12 col-md-auto">
               <input
                 class="form-control me-2 poke-search"
                 type="search"
                 placeholder="Poke Name or Number"
                 aria-label="Search"
               />
-              <button class="btn btn-outline-success" type="submit">
+              <button class="btn search-btn" type="submit">
                 Search
               </button>
             </form>
-              <ul class="pagination">
+            
+              <ul class="pagination justify-content-center  col-sm-12 col-md-auto">
                 <!--   <li class="page-item">
                   <a class="page-link" href="#">Previous</a>
                 </li>
@@ -48,7 +49,8 @@
                   <a class="page-link" href="#">Next</a>
                 </li> -->
               </ul>
-            <div class="dropdown type-menu">
+            
+            <div class="dropdown type-menu  col-sm-12 col-md-auto d-flex justify-content-center">
               <button
                 class="btn btn-secondary dropdown-toggle"
                 type="button"
@@ -205,9 +207,11 @@
                 </li>
               </ul>
             </div>
-            <button type="button" class="btn btn-warning saved-btn">Saved Poke</button>
+            <div class=" saved-col  col-sm-12 col-md-auto d-flex justify-content-center">
+            <button type="button" class="btn btn-warning saved-btn">Show Saved Poke</button>
+          </div>
 
-            <div class="dropdown saved-menu">
+            <div class="dropdown saved-menu  col-sm-12 col-md-auto d-flex justify-content-center">
               <button
                 class="btn btn-secondary dropdown-toggle"
                 type="button"

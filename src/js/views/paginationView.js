@@ -29,7 +29,7 @@ class PaginationView extends View {
     if (curPage === 1 && numPages > 1) {
       return `<button data-goto="${
         curPage + 1
-      }" class="btn--inline pagination__btn--next">
+      }" class="btn btn--inline pagination-btn pagination__btn--next">
       <span>${curPage + 1}</span>
     </button>`;
     }
@@ -37,7 +37,7 @@ class PaginationView extends View {
     if (curPage === numPages && numPages > 1) {
       return `<button data-goto="${
         curPage - 1
-      }" class="btn--inline pagination__btn--prev">
+      }" class="btn btn--inline pagination-btn pagination__btn--prev">
       <span>Page ${curPage - 1}</span>
     </button>`;
     }
@@ -46,13 +46,13 @@ class PaginationView extends View {
     if (curPage < numPages) {
       return `<button data-goto="${
         curPage - 1
-      }" class="btn--inline pagination__btn--prev">
+      }" class="btn btn--inline pagination-btn pagination__btn--prev">
         
         <span>Page ${curPage - 1}</span>
       </button>
       <button data-goto="${
         curPage + 1
-      }" class="btn--inline pagination__btn--next">
+      }" class="btn btn--inline pagination-btn pagination__btn--next">
       <span>Page ${curPage + 1}</span>
       
     </button>`;

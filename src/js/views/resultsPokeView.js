@@ -29,8 +29,8 @@ class ResultsPokeView extends View {
               <div class="card-body">
                 <h5 class="card-title">${el.name}</h5>
                 <p class="poke-id">
-                <span class="number-prefix">#</span>
-                ${el.id}
+                <span class="number-prefix"># ${el.id}</span>
+                
 
                 <span class= "icon saved-status" data-id="${el.id}"><img src="${
       el.isSaved
